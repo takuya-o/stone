@@ -92,7 +92,7 @@
  * -DNT_SERVICE	  WindowsNT/2000 native service
  * -DUSE_TPROXY	  use TProxy
  */
-#define VERSION	"2.3e"
+#define VERSION	"2.4LB"
 static char *CVS_ID =
 "@(#) $Id: stone.c,v 2.4 2016/10/07 02:31:51 hiroaki_sengoku Exp $";
 
@@ -429,8 +429,8 @@ int PairIndex;
 int MatchIndex;
 int NewMatchCount = 0;
 #ifdef WINDOWS
-#define OPENSSL_NO_TLS1_1
-#define OPENSSL_NO_TLS1_2
+// #define OPENSSL_NO_TLS1_1
+// #define OPENSSL_NO_TLS1_2
 #include <openssl/applink.c>
 #pragma comment(lib, "libeay32.lib")
 #pragma comment(lib, "ssleay32.lib")

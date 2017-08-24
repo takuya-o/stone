@@ -1,0 +1,8 @@
+*~
+*.bak
+stone
+stone.x86-64
+*.exe
+*.obj
+*.lib
+*.exp

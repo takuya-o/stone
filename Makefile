@@ -19,7 +19,7 @@
 # -DWINDOWS	Windows95/98/NT
 # -DNT_SERVICE	WindowsNT/2000 native service
 
-CFLAGS=		-D_GNU_SOURCE # -g
+CFLAGS=		-D_GNU_SOURCE -I/usr/local/ssl/include # -g
 
 SSL=		/usr/local/ssl
 SSL_FLAGS=	-DUSE_SSL -DCONST_SSL_METHOD -DOPENSSL_NO_SSL2 -DOPENSSL_NO_SSL3
@@ -29,8 +29,8 @@ POP_FLAGS=	-DUSE_POP
 POP_LIBS=	md5c.o
 
 MINGWCC=	mingw32-gcc
-MC=		wmc
-RC=		wrc
+MC=		mc
+RC=		rc
 WINDRES=	windres
 SVC_LIBS=	logmsg.o
 
@@ -81,7 +81,7 @@ svc_stone.exe: logmsg.res
 	$(MAKE) FLAGS="/DNT_SERVICE $(FLAGS)" LIBS="logmsg.res advapi32.lib user32.lib gdi32.lib shell32.lib kernel32.lib" $(TARGET)
 
 logmsg.rc: logmsg.mc
-	$(MC) -i $?
+	$(MC)  $?
 
 logmsg.res: logmsg.rc
 	$(RC) $?
@@ -180,7 +180,7 @@ irix-ssl:
 
 win:
 #	$(MAKE) FLAGS="/Zi /DUSE_PCRE /DWINDOWS /DNO_RINDEX /DNO_SNPRINTF /DNO_VSNPRINTF /DNO_PID_T $(FLAGS)" LIBS="/MT ws2_32.lib libpcreposix.lib $(LIBS) /link /NODEFAULTLIB:LIBC" stone.exe
-	$(MAKE) FLAGS="/Zi /DUSE_PCRE /DWINDOWS /DNO_RINDEX /DNO_PID_T $(FLAGS)" LIBS="/MT ws2_32.lib libpcreposix.lib $(LIBS) /link /NODEFAULTLIB:LIBC" stone.exe
+	$(MAKE) FLAGS="/Zi /DUSE_PCRE /DWINDOWS /DNO_RINDEX /DNO_PID_T $(FLAGS)" LIBS="/MT ws2_32.lib pcreposix.lib $(LIBS) /link /LIBPATH:C:\usr\local\ssl\lib /NODEFAULTLIB:LIBC" stone.exe
 
 win-pop:
 	$(MAKE) TARGET=win pop_stone.exe
