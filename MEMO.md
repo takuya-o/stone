@@ -78,7 +78,10 @@ Visual Studio Installerで「C++によるデスクトップ開発」と、mc,rc�
 ### 必要なライブラリ
 * OpenSSL 1.0
 * PCRE
-が必要。OpenSSL 1.1にはstoneのソースがまだ対応していない。
+
+が必要。
+* 以下にコンパイル方法を示す
+* OpenSSL 1.1にはstoneのソースがまだ対応していない。
 
 #### OpenSSL 1.0
 [OpenSSL 1.0.2](https://github.com/openssl/openssl/tree/OpenSSL_1_0_2-stable)のソースをコンパイルする。
@@ -101,6 +104,9 @@ Visual Studio Installerで「C++によるデスクトップ開発」と、mc,rc�
 ``` cmd
 C:/Users/.../source> cd openssl
 C:/Users/.../openssl> perl Configure VC-WIN32 no-asm
+```
+msディレクトリ以下にファイルが準備される?
+```cmd
 C:/Users/.../openssl> ms\do_ms
 C:/Users/.../openssl> nmake -f ms\ntdll.mak
 C:/Users/.../openssl> nmake -f ms\ntdll.mak test

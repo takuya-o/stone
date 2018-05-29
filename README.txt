@@ -7,41 +7,41 @@
 			    sengoku@gcd.org
 
 
-  stone $B$O!"%"%W%j%1!<%7%g%s%l%Y%k$N(B TCP & UDP $B%j%T!<%?!<$G$9!#%U%!%$%"(B
-$B%&%)!<%k$NFb$+$i30$X!"$"$k$$$O30$+$iFb$X!"(BTCP $B$"$k$$$O(B UDP $B$rCf7Q$7$^$9!#(B
+  stone は、アプリケーションレベルの TCP & UDP リピーターです。ファイア
+ウォールの内から外へ、あるいは外から内へ、TCP あるいは UDP を中継します。
 
-  stone $B$K$O0J2<$N$h$&$JFCD'$,$"$j$^$9!#(B
+  stone には以下のような特徴があります。
 
-1. Win32 $B$KBP1~$7$F$$$k(B
-	$B0JA0$O(B UNIX $B%^%7%s$G9=@.$5$l$k$3$H$,B?$+$C$?%U%!%$%"%&%)!<%k$G$9(B
-	$B$,!":G6a$O(B WindowsNT $B$,;H$o$l$k%1!<%9$,A}$($F$-$^$7$?!#(Bstone $B$O(B 
-	WindowsNT $B$"$k$$$O(B Windows95 $B>e$G<j7Z$K<B9T$9$k$3$H$,$G$-$^$9!#(B
-	$B$b$A$m$s!"(BLinux, FreeBSD, BSD/OS, SunOS, Solaris, HP-UX $B$J$I$N(B 
-	UNIX $B%^%7%s$G$b;H$&$3$H$,$G$-$^$9!#(B
+1. Win32 に対応している
+	以前は UNIX マシンで構成されることが多かったファイアウォールです
+	が、最近は WindowsNT が使われるケースが増えてきました。stone は 
+	WindowsNT あるいは Windows95 上で手軽に実行することができます。
+	もちろん、Linux, FreeBSD, BSD/OS, SunOS, Solaris, HP-UX などの 
+	UNIX マシンでも使うことができます。
 
-2. $BC1=c(B
-	$B$o$:$+(B 10000 $B9T(B (C $B8@8l(B) $B$G$9$N$G!"%;%-%e%j%F%#%[!<%k$,@8$8$k2DG=(B
-	$B@-$r:G>.8B$K$G$-$^$9!#(B
+2. 単純
+	わずか 10000 行 (C 言語) ですので、セキュリティホールが生じる可能
+	性を最小限にできます。
 
-3. SSL $BBP1~(B
-	OpenSSL (http://www.openssl.org/) $B$r;H$&$3$H$K$h$j!"0E9f2=(B/$BI|9f(B
-	$B$7$FCf7Q$G$-$^$9!#$^$?!"%/%i%$%"%s%HG'>Z$*$h$S%5!<%PG'>Z$r%5%]!<(B
-	$B%H$7$F$$$^$9!#$5$i$K!"G'>Z$K$h$C$FF@$i$l$k>ZL@=q$N%5%V%8%'%/%H$N(B
-	$B0lIt$r!"Cf7Q@h$XAw$k$3$H$b$G$-$^$9!#(B
+3. SSL 対応
+	OpenSSL (http://www.openssl.org/) を使うことにより、暗号化/復号
+	して中継できます。また、クライアント認証およびサーバ認証をサポー
+	トしています。さらに、認証によって得られる証明書のサブジェクトの
+	一部を、中継先へ送ることもできます。
 
 4. http proxy
-	$B4J0W7?(B http proxy $B$H$7$F$b;H$&$3$H$,$G$-$^$9!#(B
+	簡易型 http proxy としても使うことができます。
 
-5. POP -> APOP $BJQ49(B
-	APOP $B$KBP1~$7$F$$$J$$%a!<%i$H(B stone $B$r;H$&$3$H$G!"(BAPOP $B%5!<%P$X(B
-	$B%"%/%;%9$G$-$^$9!#(B
+5. POP -> APOP 変換
+	APOP に対応していないメーラと stone を使うことで、APOP サーバへ
+	アクセスできます。
 
-6. IPv6 $BBP1~(B
-	IP/IPv6 $BJQ49$7$FCf7Q$9$k$3$H$,$G$-$^$9!#(BIPv6 $B$KBP1~$7$F$$$J$$(B
-	$B%=%U%H%&%'%"$r<j7Z$K(B IPv6 $B2=$9$k$3$H$,2DG=$G$9!#(B
+6. IPv6 対応
+	IP/IPv6 変換して中継することができます。IPv6 に対応していない
+	ソフトウェアを手軽に IPv6 化することが可能です。
 
 
-$B;HMQJ}K!(B
+使用方法
 
 	stone [-C <file>] [-P <command>] [-Q <options>] [-N] [-d] [-p] [-n]
 	      [-u <max>] [-f <n>] [-l] [-L <file>] [-a <file>] [-i <file>]
@@ -56,139 +56,139 @@
 	      [-M install <name>] [-M remove <name>]
 	      <st> [-- <st>]...
 
-	-C $B$O%*%W%7%g%s$*$h$S(B <st> $B$r%3%^%s%I%i%$%s$G;XDj$9$k$+$o$j$K@_(B
-	$BDj%U%!%$%k$+$iFI$_9~$_$^$9!#(B-P $B$O@_Dj%U%!%$%k$rFI$_9~$`:]$N%W%j(B
-	$B%W%m%;%C%5$r;XDj$7$^$9!#%W%j%W%m%;%C%5$XM?$($k0z?t$O(B -Q $B$G;XDj$G(B
-	$B$-$^$9!#(B-N $B$r;XDj$9$k$H!"%3%^%s%I%i%$%s$*$h$S@_Dj%U%!%$%k$rFI$_(B
-	$B9~$s$@8e!"=*N;$7$^$9!#$D$^$j%]!<%H$r3+$/$3$HL5$/@_Dj%U%!%$%k$N(B
-	$B%A%'%C%/$r9T$J$&$3$H$,$G$-$^$9!#(B
+	-C はオプションおよび <st> をコマンドラインで指定するかわりに設
+	定ファイルから読み込みます。-P は設定ファイルを読み込む際のプリ
+	プロセッサを指定します。プリプロセッサへ与える引数は -Q で指定で
+	きます。-N を指定すると、コマンドラインおよび設定ファイルを読み
+	込んだ後、終了します。つまりポートを開くこと無く設定ファイルの
+	チェックを行なうことができます。
 
-	$B%*%W%7%g%s$H$7$F(B -d $B$r;XDj$9$k$H!"%G%P%C%0%l%Y%k$rA}2C$5$;$^$9!#(B 
-	-p $B$r;XDj$9$k$HCf7Q$7$?%G!<%?$r%@%s%W$7$^$9!#(B-n $B$r;XDj$9$k$H!"%[(B
-	$B%9%HL>$d%5!<%S%9L>$NBe$o$j$K(B IP $B%"%I%l%9$d%5!<%S%9HV9f$rI=<($7$^(B
-	$B$9!#(B
+	オプションとして -d を指定すると、デバッグレベルを増加させます。 
+	-p を指定すると中継したデータをダンプします。-n を指定すると、ホ
+	スト名やサービス名の代わりに IP アドレスやサービス番号を表示しま
+	す。
 
-	-u $B%*%W%7%g%s$OF1;~$K5-21$G$-$k(B UDP $B$NH/?.85$N:GBg?t$r;XDj$7$^$9!#(B
-	$B%G%U%)%k%H$O(B 100 $B$G$9!#(B-f $B%*%W%7%g%s$O;R%W%m%;%9$N?t$r;XDj$7$^$9!#(B
-	$B%G%U%)%k%H$O;R%W%m%;%9L5$7$G$9!#(B
+	-u オプションは同時に記憶できる UDP の発信元の最大数を指定します。
+	デフォルトは 100 です。-f オプションは子プロセスの数を指定します。
+	デフォルトは子プロセス無しです。
 
-	-l $B$r;XDj$9$k$H!"%(%i!<%a%C%;!<%8Ey$r(B syslog $B$X=PNO$7$^$9!#(B-L $B$r(B
-	$B;XDj$9$k$H!"%(%i!<%a%C%;!<%8Ey$r(B file $B$X=PNO$7$^$9!#(B-a $B$r;XDj$9(B
-	$B$k$H!"%"%/%;%9%m%0$r(B file $B$X=PNO$7$^$9!#(B-i $B$O(B stone $B$N%W%m%;%9(B 
-	ID $B$r=PNO$9$k%U%!%$%k$r;XDj$7$^$9!#(B
+	-l を指定すると、エラーメッセージ等を syslog へ出力します。-L を
+	指定すると、エラーメッセージ等を file へ出力します。-a を指定す
+	ると、アクセスログを file へ出力します。-i は stone のプロセス 
+	ID を出力するファイルを指定します。
 
-	-X $B$OCf7Q$r9T$J$&:]$N%P%C%U%!$NBg$-$5$r;XDj$7$^$9!#%G%U%)%k%H$O(B
-	1000 $B%P%$%H$G$9!#(B-T $B$r;XDj$9$k$H(B TCP $B%;%C%7%g%s$N%?%$%`%"%&%H$NIC(B
-	$B?t$rJQ99$G$-$^$9!#%G%U%)%k%H$O(B 600 (10 $BJ,(B) $B$G$9!#(B-A $B$r;XDj$9$k$H(B
-	listen $B8F$S=P$7$NL$=hM}@\B3%-%e!<$N:GBgD9$rJQ99$G$-$^$9!#%G%U%)%k(B
-	$B%H$O(B 50 $B$G$9!#(B-r $B$r;XDj$9$k$H(B <st> $B$N%=%1%C%H$K(B SO_REUSEADDR $B$r@_(B
-	$BDj$7$^$9!#(B
+	-X は中継を行なう際のバッファの大きさを指定します。デフォルトは
+	1000 バイトです。-T を指定すると TCP セッションのタイムアウトの秒
+	数を変更できます。デフォルトは 600 (10 分) です。-A を指定すると
+	listen 呼び出しの未処理接続キューの最大長を変更できます。デフォル
+	トは 50 です。-r を指定すると <st> のソケットに SO_REUSEADDR を設
+	定します。
 
-	-x $B$r;XDj$9$k$H(B http proxy $B$N@\B3@h$r@)8B$G$-$^$9!#@\B3@h$N%]!<(B
-	$B%HHV9f$N%j%9%H(B <port>[,<port>][-<port>]... $B$*$h$S@\B3@h%[%9%H$N(B
-	$B%j%9%H(B <xhost>... $B$r;XDj$7$^$9!#(B-x $B$rJ#?t;XDj$9$k$H!":G8e$K;XDj(B
-	$B$7$?$b$N$+$i=g$K!"%]!<%HHV9f$N%j%9%H$,%^%C%A$9$k$b$N$r8!:w$7$^$9!#(B
-	-x -- $B$r;XDj$9$k$H!"$=$l0JA0$N$b$N$O8!:wBP>]$H$J$j$^$;$s!#(B
+	-x を指定すると http proxy の接続先を制限できます。接続先のポー
+	ト番号のリスト <port>[,<port>][-<port>]... および接続先ホストの
+	リスト <xhost>... を指定します。-x を複数指定すると、最後に指定
+	したものから順に、ポート番号のリストがマッチするものを検索します。
+	-x -- を指定すると、それ以前のものは検索対象となりません。
 
-	-b $B$OCf7Q@h(B <master>:<port> $B$K@\B3$G$-$J$$$H$-$N%P%C%/%"%C%W$H$7(B
-	$B$F(B <backup>:<port> $B$r;XDj$7$^$9!#$9$J$o$A(B <n> $BIC$4$H$K(B 
-	<master>:<port> $B$KBP$9$k%X%k%9%A%'%C%/(B ($B8e=R$9$k(B -s $B%*%W%7%g%s$G(B
-	$B@_Dj(B) $B$,@.8y$9$k$+%A%'%C%/$7!"$b$7%A%'%C%/$K<:GT$7$?>l9g$O!"Cf7Q(B
-	$B@h$r(B <backup>:<port> $B$XJQ99$7$^$9!#(B<var> $B$H$7$F!V(Bhost$B!W$r;XDj$9(B
-	$B$k$3$H$K$h$j!"(B<master> $B$H$O0[$J$k%[%9%H$r%A%'%C%/$9$k$3$H$,$G$-(B
-	$B$^$9!#F1MM$K!"(B<var> $B$H$7$F!V(Bport$B!W$r;XDj$9$k$3$H$K$h$j!"0[$J$k%]!<(B
-	$B%H$r%A%'%C%/$9$k$3$H$,$G$-$^$9!#(B
+	-b は中継先 <master>:<port> に接続できないときのバックアップとし
+	て <backup>:<port> を指定します。すなわち <n> 秒ごとに 
+	<master>:<port> に対するヘルスチェック (後述する -s オプションで
+	設定) が成功するかチェックし、もしチェックに失敗した場合は、中継
+	先を <backup>:<port> へ変更します。<var> として「host」を指定す
+	ることにより、<master> とは異なるホストをチェックすることができ
+	ます。同様に、<var> として「port」を指定することにより、異なるポー
+	トをチェックすることができます。
 
-	-s $B$O%X%k%9%A%'%C%/$N%9%/%j%W%H$r@_Dj$7$^$9!#(B<send> $B$rAw?.8e!"%l(B
-	$B%9%]%s%9$,!"@55,I=8=(B <expect> $B$K%^%C%A$9$k$+3NG'$7$^$9!#(B
+	-s はヘルスチェックのスクリプトを設定します。<send> を送信後、レ
+	スポンスが、正規表現 <expect> にマッチするか確認します。
 
-	-B $B$OCf7Q@h%0%k!<%W$N;XDj$G$9!#Cf7Q@h$,(B <host>:<port> $B$G$"$k>l9g!"(B
-	$B$3$N%0%k!<%W$NCf$+$i%i%s%@%`$K0l$D$NCf7Q@h$rA*$s$GCf7Q$7$^$9!#(B-b 
-	$B%*%W%7%g%s$G@_Dj:Q$_$NCf7Q@h$G!"%X%k%9%A%'%C%/$K<:GT$7$?$b$N$O!"(B
-	$BA*Br;^$+$i=|30$7$^$9!#(B
+	-B は中継先グループの指定です。中継先が <host>:<port> である場合、
+	このグループの中からランダムに一つの中継先を選んで中継します。-b 
+	オプションで設定済みの中継先で、ヘルスチェックに失敗したものは、
+	選択枝から除外します。
 
-	-I $B$OCf7Q@h$X@\B3$9$k:]$KMQ$$$k%$%s%?%U%'!<%9$r;XDj$7$^$9!#(B
+	-I は中継先へ接続する際に用いるインタフェースを指定します。
 
-	-o $B$H(B -g $B$O$=$l$>$l%f!<%6(B ID $B$H%0%k!<%W(B ID $B$r;XDj$7$^$9!#(BID $B$O?t(B
-	$B;z$N$_;XDj2DG=$G$9!#(B-t $B$r;XDj$9$k$H!"(Bdir $B$X(B chroot $B$7$^$9!#(B-D $B$r(B
-	$B;XDj$9$k$H!"(Bstone $B$r%G!<%b%s$H$7$F5/F0$7$^$9!#(B-c $B$O%3%"%@%s%W$r(B
-	$B9T$J$&%G%#%l%/%H%j$r;XDj$7$^$9!#(B
+	-o と -g はそれぞれユーザ ID とグループ ID を指定します。ID は数
+	字のみ指定可能です。-t を指定すると、dir へ chroot します。-D を
+	指定すると、stone をデーモンとして起動します。-c はコアダンプを
+	行なうディレクトリを指定します。
 
-	-M $B$O(B stone $B$r(B NT $B%5!<%S%9$H$7$FEPO?(B/$B:o=|$9$k$?$a$N%*%W%7%g%s$G(B
-	$B$9!#%5!<%S%9L>(B <name> $B$r;XDj$7$^$9!#%5!<%S%9$H$7$FEPO?$7$?8e!"(B
-	net start <name> $B%3%^%s%I$r<B9T$7$F%5!<%S%9$r3+;O$5$;$F$/$@$5$$!#(B
-	$BNc(B:
+	-M は stone を NT サービスとして登録/削除するためのオプションで
+	す。サービス名 <name> を指定します。サービスとして登録した後、
+	net start <name> コマンドを実行してサービスを開始させてください。
+	例:
 		C:\>stone -M install repeater -C C:\stone.cfg
 		C:\>net start repeater
 
-	-q $B$*$h$S(B -z $B$O!"(BSSL $B0E9f2=(B/$BI|9f(B $B$N%*%W%7%g%s$G$9!#(B-q $B$O!"(Bstone 
-	$B$,(B SSL $B%/%i%$%"%s%H$H$7$F!"B>$N(B SSL $B%5!<%P$X@\B3$9$k$H$-!"$9$J$o(B
-	$B$ACf7Q@h$,(B SSL $B%5!<%P$N;~$N!"(BSSL $B%*%W%7%g%s$G$9!#(B-z $B$O(B stone $B$,(B 
-	SSL $B%5!<%P$H$7$F!"B>$N(B SSL $B%/%i%$%"%s%H$+$i$N@\B3$r<uIU$1$k;~$N!"(B
-	SSL $B%*%W%7%g%s$G$9!#(B
+	-q および -z は、SSL 暗号化/復号 のオプションです。-q は、stone 
+	が SSL クライアントとして、他の SSL サーバへ接続するとき、すなわ
+	ち中継先が SSL サーバの時の、SSL オプションです。-z は stone が 
+	SSL サーバとして、他の SSL クライアントからの接続を受付ける時の、
+	SSL オプションです。
 
-	<SSL> $B$O(B SSL $B%*%W%7%g%s$G!"<!$N$$$:$l$+$G$9!#(B
+	<SSL> は SSL オプションで、次のいずれかです。
 
-	default		SSL $B%*%W%7%g%s;XDj$r%G%U%)%k%H$KLa$7$^$9!#(B
-			$BJ#?t$N(B <st> $B$r;XDj$9$k:]!"(B<st> $BKh$K0[$J$k(B SSL $B%*(B
-			$B%W%7%g%s$r;XDj$9$k$3$H$,$G$-$^$9!#(B
-	verbose		$B%G%P%C%0MQJ8;zNs$r%m%0$K=PNO$7$^$9!#(B
-	verify		SSL $B@\B3Aj<j$K!"(BSSL $B>ZL@=q$rMW5a$7$^$9!#(B
-	verify,once	$B%;%C%7%g%s3+;O;~$K0lEY$@$1!"(B
-			SSL $B%/%i%$%"%s%H$K>ZL@=q$rMW5a$7$^$9!#(B(-z $B@lMQ(B)
-	verify,ifany	SSL $B%/%i%$%"%s%H$+$i>ZL@=q$,Aw$i$l$F$-$?$H$-$N$_(B
-			$BG'>Z$7$^$9!#Aw$i$l$F$3$J$$>l9g$OG'>Z$;$:$K(B
-			$B%;%C%7%g%s$r3+;O$7$^$9!#(B(-z $B@lMQ(B)
-	verify,none	SSL $B@\B3Aj<j$K(B SSL $B>ZL@=q$rMW5a$7$^$;$s!#(B
-	crl_check	CRL $B$r%A%'%C%/$7$^$9!#(B
-	crl_check_all	$B>ZL@=q%A%'!<%s$NA4$F$K$*$$$F(B CRL $B$r%A%'%C%/$7$^$9!#(B
-	uniq		SSL $B@\B3Aj<j$N(B SSL $B>ZL@=q$N%7%j%"%kHV9f$,A02s$N(B
-			$B@\B3$H0[$J$k>l9g!"@\B3$r5qH]$7$^$9!#(B
-	re<n>=<regex>	SSL $B>ZL@=q$N%A%'!<%s$,K~$?$9$Y$-@55,I=8=$r;XDj$7$^$9!#(B
-			<n> $B$O(B depth $B$G$9!#(Bre0 $B$,>ZL@=q$N%5%V%8%'%/%H!"(B
-			re1 $B$,$=$NH/9T<T$r0UL#$7$^$9!#(B
-			<n> $B$O(B 9 $B$^$G;XDj$G$-$^$9!#(B
-			<n> $B$,Ii$NCM$N>l9g$O!"(Bre-1 $B$,(B root CA $B$G!"(B
-			re-2 $B$,$=$N;R(B CA $B$r0UL#$7$^$9!#(B
-	depth=<n>	SSL $B>ZL@=q%A%'!<%s$ND9$5$N:GBgCM$r;XDj$7$^$9!#(B
-			$B%A%'!<%s$ND9$5$,$3$NCM$r1[$($k$HG'>Z$,<:GT$7$^$9!#(B
-			<n> $B$N:GBgCM$O(B 9 $B$G$9!#(B
-	tls1		$B%W%m%H%3%k$H$7$F(B TLSv1 $B$rMQ$$$^$9!#(B
-	ssl3		$B%W%m%H%3%k$H$7$F(B SSLv3 $B$rMQ$$$^$9!#(B
-	ssl2		$B%W%m%H%3%k$H$7$F(B SSLv2 $B$rMQ$$$^$9!#(B
-	no_tls1		$B%W%m%H%3%k$NA*Br;^$+$i(B TLSv1 $B$r30$7$^$9!#(B
-	no_ssl3		$B%W%m%H%3%k$NA*Br;^$+$i(B SSLv3 $B$r30$7$^$9!#(B
-	no_ssl2		$B%W%m%H%3%k$NA*Br;^$+$i(B SSLv2 $B$r30$7$^$9!#(B
-	sni		$B%5!<%PL>DLCN(B (Server Name Indication) $B$r9T$J$$$^$9!#(B
-	servername=<str>	SNI $B$GDLCN$9$k%5!<%PL>$r;XDj$7$^$9!#(B
-	bugs		SSL $B$N<BAu$K%P%0$,$"$k@\B3Aj<j$H$N@\B3$r2DG=$K$7$^$9!#(B
-	serverpref	SSL $B%5!<%P$N;XDj$7$?0E9f$rMQ$$$^$9(B (SSLv2 $B$N$_(B)$B!#(B
-	sid_ctx=<str>	SSL $B%;%C%7%g%s(B ID $B%3%s%F%-%9%H$r@_Dj$7$^$9!#(B
-	passfile=<file>	$BHkL)80$N%Q%9%U%l!<%:$r3JG<$7$?%U%!%$%k$r;XDj$7$^$9!#(B
-	passfilepat=<file>	$B%U%!%$%kL>$N%Q%?!<%s$r;XDj$7$^$9!#(B
-	key=<file>	$B>ZL@=q$NHkL)80%U%!%$%k$r;XDj$7$^$9!#(B
-	keypat=<file>		$B%U%!%$%kL>$N%Q%?!<%s$r;XDj$7$^$9!#(B
-	cert=<file>	$B>ZL@=q%U%!%$%k$r;XDj$7$^$9!#(B
-	certpat=<file>		$B%U%!%$%kL>$N%Q%?!<%s$r;XDj$7$^$9!#(B
-	certkey=<file>	$BHkL)80IU>ZL@=q%U%!%$%k$r;XDj$7$^$9!#(B
-	certkeypat=<file>	$B%U%!%$%kL>$N%Q%?!<%s$r;XDj$7$^$9!#(B
-	CAfile=<file>	$BG'>Z6I$N>ZL@=q%U%!%$%k$r;XDj$7$^$9!#(B
-	CApath=<dir>	$BG'>Z6I$N>ZL@=q$,$"$k%G%#%l%/%H%j$r;XDj$7$^$9!#(B
-	pfx=<file>	PKCS#12 $B%U%!%$%k$r;XDj$7$^$9!#(B
-	pfxpat=<file>		$B%U%!%$%kL>$N%Q%?!<%s$r;XDj$7$^$9!#(B
-	store=<prop>	[Windows] $B>ZL@=q%9%H%"Fb$NHkL)80IU>ZL@=q$r;XDj!#(B
-			"SUBJ:<substr>" $B$"$k$$$O(B "THUMB:<hex>"
-	storeCA		[Windows] $B>ZL@=q%9%H%"Fb$NG'>Z6I>ZL@=q$r;HMQ$7$^$9!#(B
-	cipher=<list>	$B0E9f2=%"%k%4%j%:%`$N%j%9%H$r;XDj$7$^$9!#(B
-	lb<n>=<m>	SSL $B>ZL@=q$N(B CN $B$K1~$8$FCf7Q@h$r@Z$jBX$($^$9!#(B
-			SSL $B%*%W%7%g%s$N(B re<n>= $B$G;XDj$7$?@55,I=8=Cf!"(B
-			<n> $BHVL\$N(B ( ... ) $BFb$N@55,I=8=$K%^%C%A$7$?J8;z(B
-			$BNs$+$i;;=P$7$??tCM$N>jM>(B <m> $B$K4p$E$$$F!"(B-B $B%*%W(B
-			$B%7%g%s$G;XDj$7$?Cf7Q@h%0%k!<%W$NCf$+$iCf7Q@h$rA*(B
-			$B$S$^$9!#(B
+	default		SSL オプション指定をデフォルトに戻します。
+			複数の <st> を指定する際、<st> 毎に異なる SSL オ
+			プションを指定することができます。
+	verbose		デバッグ用文字列をログに出力します。
+	verify		SSL 接続相手に、SSL 証明書を要求します。
+	verify,once	セッション開始時に一度だけ、
+			SSL クライアントに証明書を要求します。(-z 専用)
+	verify,ifany	SSL クライアントから証明書が送られてきたときのみ
+			認証します。送られてこない場合は認証せずに
+			セッションを開始します。(-z 専用)
+	verify,none	SSL 接続相手に SSL 証明書を要求しません。
+	crl_check	CRL をチェックします。
+	crl_check_all	証明書チェーンの全てにおいて CRL をチェックします。
+	uniq		SSL 接続相手の SSL 証明書のシリアル番号が前回の
+			接続と異なる場合、接続を拒否します。
+	re<n>=<regex>	SSL 証明書のチェーンが満たすべき正規表現を指定します。
+			<n> は depth です。re0 が証明書のサブジェクト、
+			re1 がその発行者を意味します。
+			<n> は 9 まで指定できます。
+			<n> が負の値の場合は、re-1 が root CA で、
+			re-2 がその子 CA を意味します。
+	depth=<n>	SSL 証明書チェーンの長さの最大値を指定します。
+			チェーンの長さがこの値を越えると認証が失敗します。
+			<n> の最大値は 9 です。
+	tls1		プロトコルとして TLSv1 を用います。
+	ssl3		プロトコルとして SSLv3 を用います。
+	ssl2		プロトコルとして SSLv2 を用います。
+	no_tls1		プロトコルの選択枝から TLSv1 を外します。
+	no_ssl3		プロトコルの選択枝から SSLv3 を外します。
+	no_ssl2		プロトコルの選択枝から SSLv2 を外します。
+	sni		サーバ名通知 (Server Name Indication) を行ないます。
+	servername=<str>	SNI で通知するサーバ名を指定します。
+	bugs		SSL の実装にバグがある接続相手との接続を可能にします。
+	serverpref	SSL サーバの指定した暗号を用います (SSLv2 のみ)。
+	sid_ctx=<str>	SSL セッション ID コンテキストを設定します。
+	passfile=<file>	秘密鍵のパスフレーズを格納したファイルを指定します。
+	passfilepat=<file>	ファイル名のパターンを指定します。
+	key=<file>	証明書の秘密鍵ファイルを指定します。
+	keypat=<file>		ファイル名のパターンを指定します。
+	cert=<file>	証明書ファイルを指定します。
+	certpat=<file>		ファイル名のパターンを指定します。
+	certkey=<file>	秘密鍵付証明書ファイルを指定します。
+	certkeypat=<file>	ファイル名のパターンを指定します。
+	CAfile=<file>	認証局の証明書ファイルを指定します。
+	CApath=<dir>	認証局の証明書があるディレクトリを指定します。
+	pfx=<file>	PKCS#12 ファイルを指定します。
+	pfxpat=<file>		ファイル名のパターンを指定します。
+	store=<prop>	[Windows] 証明書ストア内の秘密鍵付証明書を指定。
+			"SUBJ:<substr>" あるいは "THUMB:<hex>"
+	storeCA		[Windows] 証明書ストア内の認証局証明書を使用します。
+	cipher=<list>	暗号化アルゴリズムのリストを指定します。
+	lb<n>=<m>	SSL 証明書の CN に応じて中継先を切り替えます。
+			SSL オプションの re<n>= で指定した正規表現中、
+			<n> 番目の ( ... ) 内の正規表現にマッチした文字
+			列から算出した数値の剰余 <m> に基づいて、-B オプ
+			ションで指定した中継先グループの中から中継先を選
+			びます。
 
-	<st> $B$O<!$N$$$:$l$+$G$9!#(B<st> $B$O!V(B--$B!W$G6h@Z$k$3$H$K$h$j!"J#?t8D(B
-	$B;XDj$G$-$^$9!#(B
+	<st> は次のいずれかです。<st> は「--」で区切ることにより、複数個
+	指定できます。
 
 	(1)	<host>:<port> <sport> [<xhost>...]
 	(2)	<host>:<port> <shost>:<sport> [<xhost>...]
@@ -197,199 +197,199 @@
 	(5)	<host>:<port>/proxy <sport> <header> [<xhost>...]
 	(6)	health <sport> [<xhost>...]
 
-	stone $B$r<B9T$7$F$$$k%^%7%s$N%]!<%H(B <sport> $B$X$N@\B3$r!"B>$N%^%7(B
-	$B%s(B <host> $B$N%]!<%H(B <port> $B$XCf7Q$7$^$9!#%$%s%?%U%'!<%9$rJ#?t;}$D(B
-	$B%^%7%s$G$O!"(B(2) $B$N$h$&$K%$%s%?%U%'!<%9$N%"%I%l%9(B <shost> $B$r;XDj(B
-	$B$9$k$3$H$K$h$j!"FCDj$N%$%s%?%U%'!<%9$X$N@\B3$N$_$rE>Aw$9$k$3$H$,(B
-	$B$G$-$^$9!#(B<host>:<port> $B$NBe$o$j$K!"!V(B/$B!W$J$$$7!V(B./$B!W$+$i;O$^$k(B
-	$B%Q%9L>$r;XDj$9$k$3$H$K$h$j!"(BUNIX $B%I%a%$%s%=%1%C%H$r07$&$3$H$b$G(B
-	$B$-$^$9!#(B
+	stone を実行しているマシンのポート <sport> への接続を、他のマシ
+	ン <host> のポート <port> へ中継します。インタフェースを複数持つ
+	マシンでは、(2) のようにインタフェースのアドレス <shost> を指定
+	することにより、特定のインタフェースへの接続のみを転送することが
+	できます。<host>:<port> の代わりに、「/」ないし「./」から始まる
+	パス名を指定することにより、UNIX ドメインソケットを扱うこともで
+	きます。
 
-	(3) $B$O!"(Bhttp proxy $B$G$9!#(BWWW $B%V%i%&%6$N(B http proxy $B$N@_Dj$G!"(B
-	stone $B$r<B9T$7$F$$$k%^%7%s$*$h$S%]!<%H(B <sport> $B$r;XDj$7$^$9!#(B
-	$B!V(Bproxy$B!W$K$O!"!V(B/$B!W$KB3$1$F0J2<$N3HD%;R$rIU$1$k$3$H$,$G$-$^$9!#(B
+	(3) は、http proxy です。WWW ブラウザの http proxy の設定で、
+	stone を実行しているマシンおよびポート <sport> を指定します。
+	「proxy」には、「/」に続けて以下の拡張子を付けることができます。
 
-	v4only	proxy $B$N@\B3@h$r(B IP $B%"%I%l%9$K8BDj$7$^$9!#(B
+	v4only	proxy の接続先を IP アドレスに限定します。
 
-	v6only	proxy $B$N@\B3@h$r(B IPv6 $B%"%I%l%9$K8BDj$7$^$9!#(B
+	v6only	proxy の接続先を IPv6 アドレスに限定します。
 
-	(4) $B$O!"(Bhttp $B%j%/%(%9%H$K$N$;$FCf7Q$7$^$9!#(B<request> $B$O(B HTTP 1.0 
-	$B$G5,Dj$5$l$k%j%/%(%9%H$G$9!#%j%/%(%9%HJ8;zNsCf!"!V(B\$B!W$O%(%9%1!<(B
-	$B%WJ8;z$G$"$j!"<!$N$h$&$JCV$-49$($,9T$J$o$l$^$9!#(B
+	(4) は、http リクエストにのせて中継します。<request> は HTTP 1.0 
+	で規定されるリクエストです。リクエスト文字列中、「\」はエスケー
+	プ文字であり、次のような置き換えが行なわれます。
 
-		\n	$B2~9T(B (0x0A)
-		\r	$BI|5"(B (0x0D)
-		\t	$B%?%V(B (0x09)
+		\n	改行 (0x0A)
+		\r	復帰 (0x0D)
+		\t	タブ (0x09)
 		\\	\    (0x5C)
-		\a	$B@\B385$N(B IP $B%"%I%l%9(B
-		\A	$B!V@\B385$N(B IP $B%"%I%l%9!W(B:$B!V%]!<%HHV9f!W(B
-		\d	$B@\B3@h$N(B IP $B%"%I%l%9(B
-		\D	$B!V@\B3@h$N(B IP $B%"%I%l%9!W(B:$B!V%]!<%HHV9f!W(B($BF)2a%W%m%-%7MQ(B)
-		\u	$B@\B385$N%f!<%6(BID ($BHV9f(B)
-		\U	$B@\B385$N%f!<%6L>(B
-		\g	$B@\B385$N%0%k!<%W(BID ($BHV9f(B)
-		\G	$B@\B385$N%0%k!<%WL>(B
-			\u \U \g \G $B$O(B UNIX $B%I%a%$%s%=%1%C%H$N>l9g$N$_(B
-		\0	SSL $B>ZL@=q$N%7%j%"%kHV9f(B
-		\1 - \9	SSL $B%*%W%7%g%s$N(B re<n>= $B$G;XDj$7$?@55,I=8=Cf!"(B
-			( ... ) $BFb$N@55,I=8=$K%^%C%A$7$?J8;zNs(B
+		\a	接続元の IP アドレス
+		\A	「接続元の IP アドレス」:「ポート番号」
+		\d	接続先の IP アドレス
+		\D	「接続先の IP アドレス」:「ポート番号」(透過プロキシ用)
+		\u	接続元のユーザID (番号)
+		\U	接続元のユーザ名
+		\g	接続元のグループID (番号)
+		\G	接続元のグループ名
+			\u \U \g \G は UNIX ドメインソケットの場合のみ
+		\0	SSL 証明書のシリアル番号
+		\1 - \9	SSL オプションの re<n>= で指定した正規表現中、
+			( ... ) 内の正規表現にマッチした文字列
 		\?1<then>\:<else>\/
-			$B$b$7(B \1 (\2 - \9 $B$bF1MM(B) $B$NJ8;zNs$,!"6uJ8;zNs$G(B
-			$B$J$1$l$P(B <then>$B!"6uJ8;zNs$G$"$l$P(B <else>
+			もし \1 (\2 - \9 も同様) の文字列が、空文字列で
+			なければ <then>、空文字列であれば <else>
 
-	(5) $B$O!"(Bhttp $B%j%/%(%9%H%X%C%@$N@hF,$K(B <header> $B$rDI2C$7$FCf7Q$7(B
-	$B$^$9!#(B(4) $B$HF1MM$N%(%9%1!<%W$r;H$&$3$H$,$G$-$^$9!#!V(B/proxy$B!W$NBe(B
-	$B$o$j$K!V(B/mproxy$B!W$r;XDj$9$k$H!"%j%/%(%9%H%X%C%@$4$H$K(B <header> 
-	$B$rDI2C$7$^$9!#(B
+	(5) は、http リクエストヘッダの先頭に <header> を追加して中継し
+	ます。(4) と同様のエスケープを使うことができます。「/proxy」の代
+	わりに「/mproxy」を指定すると、リクエストヘッダごとに <header> 
+	を追加します。
 
-	(6) $B$O!"(Bstone $B$,@5>o$KF0:n$7$F$$$k$+8!::$9$k$?$a$N%]!<%H$N;XDj$G(B
-	$B$9!#(B<sport> $B$G;XDj$7$?%]!<%H$K@\B3$7$F0J2<$N%3%^%s%I$rAw?.$9$k$H!"(B
-	stone $B$N>uBV$,JV$5$l$^$9!#(B
+	(6) は、stone が正常に動作しているか検査するためのポートの指定で
+	す。<sport> で指定したポートに接続して以下のコマンドを送信すると、
+	stone の状態が返されます。
 
-		HELO $BG$0U$NJ8;zNs(B	stone, pair, trash $BEy$N8D?t(B
-		STAT			$B%9%l%C%I$N8D?t(B, mutex $B%3%s%U%j%/%H2s?t(B
-		FREE			free $B%j%9%HD9(B
-		CLOCK			$B7P2aIC?t(B
-		CVS_ID			CVS $B$N(B ID
-		CONFIG			config $B%U%!%$%k$NFbMF(B
-		STONE			$B3F(B stone $B$N@_DjFbMF(B
-		LIMIT <var> <n>		$BJQ?t(B <var> $B$NCM$,(B <n> $BL$K~$+D4$Y$k(B
+		HELO 任意の文字列	stone, pair, trash 等の個数
+		STAT			スレッドの個数, mutex コンフリクト回数
+		FREE			free リスト長
+		CLOCK			経過秒数
+		CVS_ID			CVS の ID
+		CONFIG			config ファイルの内容
+		STONE			各 stone の設定内容
+		LIMIT <var> <n>		変数 <var> の値が <n> 未満か調べる
 
-	<var> $B$O<!$N$&$A$N$$$:$l$+$G$9!#(B
+	<var> は次のうちのいずれかです。
 
-		PAIR		pair $B$N8D?t(B
-		CONN		conn $B$N8D?t(B
-		ESTABLISHED	$B:G8e$K@\B33NN)$7$F$+$i$NIC?t(B
-		READWRITE	$B:G8e$K(B read or write $B$7$F$+$i$NIC?t(B
-		ASYNC		$B%9%l%C%I$NK\?t(B
+		PAIR		pair の個数
+		CONN		conn の個数
+		ESTABLISHED	最後に接続確立してからの秒数
+		READWRITE	最後に read or write してからの秒数
+		ASYNC		スレッドの本数
 
-	stone $B$+$i$N1~Ez$O!"@5>o;~$O(B 200 $BHVBf!"0[>o;~$O(B 500 $BHVBf$N?tCM$,(B
-	$B@hF,$K$D$-$^$9!#(B
+	stone からの応答は、正常時は 200 番台、異常時は 500 番台の数値が
+	先頭につきます。
 
-	<xhost> $B$rNs5s$9$k$3$H$K$h$j!"(Bstone $B$X@\B32DG=$J%^%7%s$r@)8B$9$k(B
-	$B$3$H$,$G$-$^$9!#%^%7%sL>!"$"$k$$$O$=$N(B IP $B%"%I%l%9$r6uGr$G6h@Z$C(B
-	$B$F;XDj$9$k$H!"$=$N%^%7%s$+$i$N@\B3$N$_$rCf7Q$7$^$9!#(B
+	<xhost> を列挙することにより、stone へ接続可能なマシンを制限する
+	ことができます。マシン名、あるいはその IP アドレスを空白で区切っ
+	て指定すると、そのマシンからの接続のみを中継します。
 
-	<xhost> $B$K$O!"!V(B/$B!W$KB3$1$F0J2<$N3HD%;R$rIU$1$k$3$H$,$G$-$^$9!#(B
-	$BJ#?t$N3HD%;R$r;XDj$9$k$H$-$O!V(B,$B!W$G6h@Z$j$^$9!#(B
+	<xhost> には、「/」に続けて以下の拡張子を付けることができます。
+	複数の拡張子を指定するときは「,」で区切ります。
 
-	<m>	$B%M%C%H%o!<%/!&%^%9%/$N%S%C%H?t$r;XDj$9$k$3$H$K$h$j!"FCDj(B
-		$B$N%M%C%H%o!<%/$N%^%7%s$+$i$N@\B3$r5v2D$9$k$3$H$,$G$-$^$9!#(B
-		$BNc$($P!"%/%i%9(B C $B$N%M%C%H%o!<%/(B 192.168.1.0 $B$N>l9g$O!"(B
-		$B!V(B192.168.1.0/24$B!W$H;XDj$7$^$9!#(B
+	<m>	ネットワーク・マスクのビット数を指定することにより、特定
+		のネットワークのマシンからの接続を許可することができます。
+		例えば、クラス C のネットワーク 192.168.1.0 の場合は、
+		「192.168.1.0/24」と指定します。
 
-	v4	<xhost> $B$r(B IP $B%"%I%l%9$H$7$F07$$$^$9!#(B
+	v4	<xhost> を IP アドレスとして扱います。
 
-	v6	<xhost> $B$r(B IPv6 $B%"%I%l%9$H$7$F07$$$^$9!#(B
+	v6	<xhost> を IPv6 アドレスとして扱います。
 
-	p<m>	<xhost> $B$+$i$N@\B3$N$_!"Cf7Q$7$?%G!<%?$r%@%s%W$7$^$9!#(B
-		<m> $B$O%@%s%WJ}K!$N;XDj$G$9!#(B-p $B%*%W%7%g%s$N8D?t$KAjEv$7(B
-		$B$^$9!#(B
+	p<m>	<xhost> からの接続のみ、中継したデータをダンプします。
+		<m> はダンプ方法の指定です。-p オプションの個数に相当し
+		ます。
 
-	<xhost> $B$NBe$o$j$K!V(B!$B!W$r;XDj$9$k$H!"8eB3$N(B <xhost> $B$O@\B3$r5qH](B
-	$B$9$k%^%7%s$N;XDj$K$J$j$^$9!#(B
+	<xhost> の代わりに「!」を指定すると、後続の <xhost> は接続を拒否
+	するマシンの指定になります。
 
-	<port> $B$K$O!"!V(B/$B!W$KB3$1$F0J2<$N3HD%;R$rIU$1$k$3$H$,$G$-$^$9!#(B
-	$BJ#?t$N3HD%;R$r;XDj$9$k$H$-$O!V(B,$B!W$G6h@Z$j$^$9!#(B
+	<port> には、「/」に続けて以下の拡張子を付けることができます。
+	複数の拡張子を指定するときは「,」で区切ります。
 
-	udp	TCP $B$rCf7Q$9$kBe$o$j$K!"(BUDP $B$rCf7Q$7$^$9!#(B
+	udp	TCP を中継する代わりに、UDP を中継します。
 
-	ssl	SSL $B$G0E9f2=$7$FCf7Q$7$^$9!#(B
+	ssl	SSL で暗号化して中継します。
 
-	v6	$BCf7Q@h$X(B IPv6 $B@\B3$7$^$9!#(B
+	v6	中継先へ IPv6 接続します。
 
-	base	MIME base64 $B$GId9f2=$7$FCf7Q$7$^$9!#(B
+	base	MIME base64 で符号化して中継します。
 
-	<sport> $B$K$O!"!V(B/$B!W$KB3$1$F0J2<$N3HD%;R$rIU$1$k$3$H$,$G$-$^$9!#(B
-	$BJ#?t$N3HD%;R$r;XDj$9$k$H$-$O!V(B,$B!W$G6h@Z$j$^$9!#(B
+	<sport> には、「/」に続けて以下の拡張子を付けることができます。
+	複数の拡張子を指定するときは「,」で区切ります。
 
-	udp	TCP $B$rCf7Q$9$kBe$o$j$K!"(BUDP $B$rCf7Q$7$^$9!#(B
+	udp	TCP を中継する代わりに、UDP を中継します。
 
-	apop	POP $B$r(B APOP $B$XJQ49$7$FCf7Q$7$^$9!#(B
-		$BJQ49$K$O(B RSA Data Security $B<R$N(B MD5 Message-Digest $B%"%k(B
-		$B%4%j%:%`$r;HMQ$7$^$9!#(B
+	apop	POP を APOP へ変換して中継します。
+		変換には RSA Data Security 社の MD5 Message-Digest アル
+		ゴリズムを使用します。
 
-	ssl	SSL $B$rI|9f$7$FCf7Q$7$^$9!#(B
+	ssl	SSL を復号して中継します。
 
-	v6	IPv6 $B@\B3$r<uIU$1$^$9!#(B(1) $B$N$h$&$K%$%s%?%U%'!<%9$N(B
-		$B%"%I%l%9(B <shost> $B$r;XDj$7$J$$>l9g$O!"(BIP $B@\B3$b<uIU$1$k$3(B
-		$B$H$,$G$-$^$9!#(B
+	v6	IPv6 接続を受付けます。(1) のようにインタフェースの
+		アドレス <shost> を指定しない場合は、IP 接続も受付けるこ
+		とができます。
 
-	v6only	IPv6 $B@\B3$N$_$r<uIU$1$^$9!#(B(1) $B$N$h$&$K%$%s%?%U%'!<%9$N(B
-		$B%"%I%l%9(B <shost> $B$r;XDj$7$J$$>l9g$b!"(BIP $B@\B3$r<uIU$1$k$3(B
-		$B$H$O$"$j$^$;$s!#(B
+	v6only	IPv6 接続のみを受付けます。(1) のようにインタフェースの
+		アドレス <shost> を指定しない場合も、IP 接続を受付けるこ
+		とはありません。
 
-	base	MIME base64 $B$rI|9f$7$FCf7Q$7$^$9!#(B
+	base	MIME base64 を復号して中継します。
 
-	http	http $B%j%/%(%9%H%X%C%@$r<h$j=|$$$FCf7Q$7$^$9!#(B
+	http	http リクエストヘッダを取り除いて中継します。
 
-	ident	$B@\B3$r<uIU$1$k$H$-$K@\B385$KBP$7(B ident $B%W%m%H%3%k(B 
-		(RFC1413) $B$r;H$C$F%f!<%6L>$r>H2q$7$^$9!#(B
+	ident	接続を受付けるときに接続元に対し ident プロトコル 
+		(RFC1413) を使ってユーザ名を照会します。
 
 
-$BNc(B
-	outer: $B%U%!%$%"%&%)!<%k$N30B&$K$"$k%^%7%s(B
-	inner: $B%U%!%$%"%&%)!<%k$NFbB&$K$"$k%^%7%s(B
-	fwall: $B%U%!%$%"%&%)!<%k(B. $B$3$N%^%7%s>e$G(B stone $B$r<B9T(B
+例
+	outer: ファイアウォールの外側にあるマシン
+	inner: ファイアウォールの内側にあるマシン
+	fwall: ファイアウォール. このマシン上で stone を実行
 
 	stone outer:telnet 10023
-		outer $B$X(B telnet $B%W%m%H%3%k$rCf7Q(B
-		inner $B$G(B telnet fwall 10023 $B$r<B9T(B
+		outer へ telnet プロトコルを中継
+		inner で telnet fwall 10023 を実行
 
 	stone outer:domain/udp domain/udp
-		DNS $BLd$$9g$o$;$r(B outer $B$XCf7Q(B
-		inner $B$G(B nslookup - fwall $B$r<B9T(B
+		DNS 問い合わせを outer へ中継
+		inner で nslookup - fwall を実行
 
 	stone outer:ntp/udp ntp/udp
-		outer $B$X(B NTP $B$rCf7Q(B
-		inner $B$G(B ntpdate fwall $B$r<B9T(B
+		outer へ NTP を中継
+		inner で ntpdate fwall を実行
 
 	stone localhost:http 443/ssl
-		WWW $B%5!<%P$r(B https $BBP1~$K$9$k(B
-		WWW $B%V%i%&%6$G(B https://fwall/ $B$r%"%/%;%9(B
+		WWW サーバを https 対応にする
+		WWW ブラウザで https://fwall/ をアクセス
 
 	stone localhost:telnet 10023/ssl
-		telnet $B$r(B SSL $B2=(B
-		inner $B$G(B SSLtelnet -z ssl fwall 10023 $B$r<B9T(B
+		telnet を SSL 化
+		inner で SSLtelnet -z ssl fwall 10023 を実行
 
 	stone proxy 8080
 		http proxy
 
 	stone outer:110/apop 110
-		APOP $B$KBP1~$7$F$$$J$$%a!<%i$G(B inner:pop $B$X@\B3(B
+		APOP に対応していないメーラで inner:pop へ接続
 
-	fwall $B$,(B http proxy (port 8080) $B$G$"$k;~(B:
+	fwall が http proxy (port 8080) である時:
 
 	stone fwall:8080/http 10023 'POST http://outer:8023 HTTP/1.0'
 	stone localhost:telnet 8023/http
-		inner $B$H(B outer $B$G$=$l$>$l(B stone $B$r<B9T(B
-		http $B%j%/%(%9%H$K$N$;$FCf7Q(B
+		inner と outer でそれぞれ stone を実行
+		http リクエストにのせて中継
 
 	stone fwall:8080/proxy 9080 'Proxy-Authorization: Basic c2VuZ29rdTpoaXJvYWtp'
-		proxy $BG'>Z$KBP1~$7$F$$$J$$%V%i%&%6MQ(B
+		proxy 認証に対応していないブラウザ用
 
 
-$B%[!<%`%Z!<%8(B
+ホームページ
 
-	stone $B$N8x<0%[!<%`%Z!<%8$O<!$N(B URL $B$G$9!#(B
+	stone の公式ホームページは次の URL です。
 	http://www.gcd.org/sengoku/stone/Welcome.ja.html
 
 
-$BCx:n8"(B
+著作権
 
-	$B$3$N(B stone $B$K4X$9$kA4$F$NCx:n8"$O!"86Cx:n<T$G$"$k@g@P9@L@$,=jM-(B
-	$B$7$^$9!#$3$N(B stone $B$O!"(BGNU General Public License (GPL) $B$K=`$:$k(B
-	$B%U%j!<%=%U%H%&%'%"$G$9!#8D?ME*$K;HMQ$9$k>l9g$O!"2~JQ!&J#@=$K@)8B(B
-	$B$O$"$j$^$;$s!#G[I[$9$k>l9g$O(B GPL $B$K=>$C$F2<$5$$!#$^$?!"(Bopenssl 
-	$B$H%j%s%/$7$F;HMQ$9$k$3$H$r5v2D$7$^$9!#(B
-
-
-$BL5J]>Z(B
-
-	$B$3$N(B stone $B$OL5J]>Z$G$9!#$3$N(B stone $B$r;H$C$F@8$8$?$$$+$J$kB;32$K(B
-	$BBP$7$F$b!"86Cx:n<T$O@UG$$rIi$$$^$;$s!#>\$7$/$O(B GPL $B$r;2>H$7$F2<(B
-	$B$5$$!#(B
+	この stone に関する全ての著作権は、原著作者である仙石浩明が所有
+	します。この stone は、GNU General Public License (GPL) に準ずる
+	フリーソフトウェアです。個人的に使用する場合は、改変・複製に制限
+	はありません。配布する場合は GPL に従って下さい。また、openssl 
+	とリンクして使用することを許可します。
 
 
-#2939								$B@g@P(B $B9@L@(B
+無保証
+
+	この stone は無保証です。この stone を使って生じたいかなる損害に
+	対しても、原著作者は責任を負いません。詳しくは GPL を参照して下
+	さい。
+
+
+#2939								仙石 浩明
 http://www.gcd.org/sengoku/		Hiroaki Sengoku <sengoku@gcd.org>
